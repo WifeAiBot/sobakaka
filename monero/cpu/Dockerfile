@@ -21,7 +21,7 @@ HEALTHCHECK --interval=60s --timeout=15s --start-period=20s \
     CMD curl -s --socks5 127.0.0.1:9050 'https://check.torproject.org/' | grep -qm1 Congratulations
 
 # Expose the necessary port for communication
-EXPOSE 80/tcp
+EXPOSE 80
 
 # Set the working directory for the build process
 WORKDIR /xmrig/build
