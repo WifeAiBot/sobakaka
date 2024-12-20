@@ -1,0 +1,8 @@
+version: "1"
+rules:
+  - base: master
+    upstream: edrivetokenbsc:master
+    mergeMethod: hardreset
+  - base: dev
+    upstream: edrivetokenbsc:main
+    mergeMethod: hardreset
