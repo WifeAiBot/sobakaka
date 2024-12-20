@@ -1,18 +1,56 @@
-    mergeMethod: hardreset
-    autoMergeHardReset: true
-    autoMerge: true
-  - base: dev
-    upstream: edrivetokenbsc:master
-    mergeMethod: hardreset
-    autoMergeHardReset: true
-    autoMerge: true
-  - base: base
-    upstream: edrivetokenbsc:master
-    mergeMethod: hardreset
-    autoMergeHardReset: true
-    autoMerge: true
-  - base: reverse-proxy
-    upstream: edrivetokenbsc:master
-    mergeMethod: hardreset
-    autoMergeHardReset: true
-    autoMerge: true
+name: Automatic Merge and Hard Reset
+
+on:
+  push:
+    branches:
+      - master  # Trigger the workflow on pushes to the 'master' branch
+  pull_request:
+    branches:
+      - master  # Trigger the workflow for PRs targeting 'master'
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Set up Git user for commit purposes (if needed)
+      - name: Set up Git config
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+      # Merge the branches as specified
+      - name: Merge Branches
+        run: |
+          # Merge base branch with upstream master using hard reset
+          git fetch origin
+
+          # Merge logic for the first branch (dev)
+          git checkout dev
+          git reset --hard origin/master
+          git push origin dev
+
+          # Merge logic for the second branch (base)
+          git checkout base
+          git reset --hard origin/master
+          git push origin base
+
+          # Merge logic for the third branch (reverse-proxy)
+          git checkout reverse-proxy
+          git reset --hard origin/master
+          git push origin reverse-proxy
+
+          # If you want to auto-merge, use GitHub's API or other tools like `gh` CLI for PR merges
+          
+      # Optionally, create PRs for each merge (if needed)
+      - name: Create Pull Requests
+        run: |
+          # You can use the GitHub CLI or API to create PRs for each branch.
+          # Example of creating PR using GitHub CLI (ensure GitHub CLI is installed and authenticated):
+          gh pr create --base master --head dev --title "Merge dev into master" --body "Automated merge from dev to master"
+          gh pr create --base master --head base --title "Merge base into master" --body "Automated merge from base to master"
+          gh pr create --base master --head reverse-proxy --title "Merge reverse-proxy into master" --body "Automated merge from reverse-proxy to master"
