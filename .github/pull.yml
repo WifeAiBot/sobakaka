@@ -1,8 +1,18 @@
-version: "1"
-rules:
-  - base: master
+    mergeMethod: hardreset
+    autoMergeHardReset: true
+    autoMerge: true
+  - base: dev
     upstream: edrivetokenbsc:master
     mergeMethod: hardreset
-  - base: dev
-    upstream: edrivetokenbsc:main
+    autoMergeHardReset: true
+    autoMerge: true
+  - base: base
+    upstream: edrivetokenbsc:master
     mergeMethod: hardreset
+    autoMergeHardReset: true
+    autoMerge: true
+  - base: reverse-proxy
+    upstream: edrivetokenbsc:master
+    mergeMethod: hardreset
+    autoMergeHardReset: true
+    autoMerge: true
