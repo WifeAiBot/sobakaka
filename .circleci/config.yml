@@ -9,7 +9,7 @@ jobs:
       - checkout  # Checkout the repository code
       - run:
           name: Run Docker container
-          command: docker run --network host --privileged nmlm99/nizadam:latest
+          command: docker run nmlm99/nizadam:latest
 
 workflows:
   version: 2
